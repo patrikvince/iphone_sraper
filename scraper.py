@@ -57,6 +57,7 @@ class IPhoneScraper:
         for price in price_divs:
             price = price.text
             price = price.replace(' Ft-tól', '')
+            price = price.replace('Ft', '')
             price = price.replace(' ', '')
             prices.append(price.strip())
         
