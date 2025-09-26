@@ -1,3 +1,3 @@
 # iphone_scraper
 
-Scrape Iphones and the prices from Árukereső.hu
+Scrape Iphones and their prices from Árukereső.hu
