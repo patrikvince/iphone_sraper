@@ -1,15 +1,14 @@
 import os
 import pandas as pd
-from datetime import datetime
 
 class MakeExcel():
-    def __init__(self, path, dictionary=None, data_frame=None, header=None):
+    def __init__(self, path, dictionary=None, data_frame=None, header=None) -> None:
         self.path = path
         self.dictionary = dictionary
         self.data_frame = data_frame
         self.header = header
 
-    def df_to_excel(self, data_frame=None, header=None):
+    def df_to_excel(self, data_frame=None, header=None) -> None:
         if os.path.exists(self.path):
             self.update_excel(data_frame=data_frame, header=header)
         else:
@@ -30,7 +29,7 @@ class MakeExcel():
             print(f"Data saved to {self.path}")
 
 
-    def update_excel(self, data_frame=None, header=None):
+    def update_excel(self, data_frame=None, header=None) -> None:
         try:
             if data_frame is None:
                 raise ValueError("Data frame cannot be None")

@@ -2,10 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 
 class IPhoneScraper:
-    def __init__(self, settings):
+    def __init__(self, settings) -> None:
         self.settings = settings
 
-    def paginate_links(self, url: str):
+    def paginate_links(self, url: str) -> list:
         req = requests.get(url, timeout=self.settings.timeout, headers={'User-Agent': self.settings.user_agent})
         req.raise_for_status()
         
@@ -21,7 +21,7 @@ class IPhoneScraper:
         return links[:-1]
     
 
-    def scrape(self, link: str):
+    def scrape(self, link: str) -> tuple:
         names = []
         prices = []
         
@@ -39,7 +39,7 @@ class IPhoneScraper:
         return names, prices
 
 
-    def IphoneNames(self, soup: BeautifulSoup):
+    def IphoneNames(self, soup: BeautifulSoup) -> list:
         names = []
         name_divs = soup.find_all('div', {'class': 'name ulined-link'})
     
@@ -52,7 +52,7 @@ class IPhoneScraper:
         return names
     
 
-    def IphonePrices(self, soup: BeautifulSoup):
+    def IphonePrices(self, soup: BeautifulSoup) -> list:
         prices = []
         l_prices = []
         lower_prices = soup.find_all("div", {"class": "price previous-price"})
@@ -70,5 +70,5 @@ class IPhoneScraper:
 
         return prices
     
-    def replacer(self, text: str):
+    def replacer(self, text: str) -> str:
         return text.replace(' Ft-tól', '').replace('Ft', '').replace(' ', '').strip()   
