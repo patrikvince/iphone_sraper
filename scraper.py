@@ -21,9 +21,11 @@ class IPhoneScraper:
         return links[:-1]
     
 
-    def scrape(self, links: list):
+    def scrape(self, link: str):
         names = []
         prices = []
+        
+        links = self.paginate_links(url=link)
 
         for link in links:
             req = requests.get(link, timeout=self.settings.timeout, headers={'User-Agent': self.settings.user_agent})
@@ -52,13 +54,21 @@ class IPhoneScraper:
 
     def IphonePrices(self, soup: BeautifulSoup):
         prices = []
+        l_prices = []
+        lower_prices = soup.find_all("div", {"class": "price previous-price"})
+        for l_price in lower_prices:
+            l_price = self.replacer(l_price.text)
+            l_prices.append(l_price.strip())
+
         price_divs = soup.find_all('div', {'class': 'price'})
        
         for price in price_divs:
-            price = price.text
-            price = price.replace(' Ft-tól', '')
-            price = price.replace('Ft', '')
-            price = price.replace(' ', '')
+            price = self.replacer(price.text)
             prices.append(price.strip())
         
+        prices = [p for p in prices if p not in l_prices]
+
         return prices
+    
+    def replacer(self, text: str):
+        return text.replace(' Ft-tól', '').replace('Ft', '').replace(' ', '').strip()   
